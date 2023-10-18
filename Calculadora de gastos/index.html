@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Gerenciador de Despesas</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciador de Despesas</h1>
+        
+        <div class="balance-section">
+            <input type="number" id="initial-money" placeholder="Saldo Inicial">
+            <button id="update-money">Atualizar Saldo</button>
+            <h2 id="total-money">Saldo: R$ 0.00</h2>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="expense-input" placeholder="Despesa">
+            <input type="number" id="amount-input" placeholder="Valor da Despesa">
+            <select id="category-input">
+                <option value="Alimentação">Alimentação</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Moradia">Moradia</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Outros">Outros</option>
+            </select>
+            <button id="add-expense">Adicionar Despesa</button>
+        </div>
+        
+        <div class="expenses">
+            <h2>Despesas</h2>
+            <div class="filter-section">
+                <label for="filter-category">Filtrar por Categoria:</label>
+                <select id="filter-category">
+                    <option value="Todas">Todas</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Moradia">Moradia</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Outros">Outros</option>
+                </select>
+
+                <label for="filter-sorting">Ordenar por:</label>
+                <select id="filter-sorting">
+                    <option value="Valor Crescente">Valor Crescente</option>
+                    <option value="Valor Decrescente">Valor Decrescente</option>
+                </select>
+            </div>
+            <ul id="expense-list">
+            </ul>
+        </div>
+        
+        <div class="total">
+            <h2 id="total-expenses">Total de Despesas: R$ 0.00</h2>
+        </div>
+        
+        <div class="chart-section">
+            <h2>Gráfico de Despesas</h2>
+            <canvas id="expense-chart"></canvas>
+        </div>
+        <div class="chart-section">
+            <h2>Gráfico de Pizza</h2>
+            <canvas id="pie-chart"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
