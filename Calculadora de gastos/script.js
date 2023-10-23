@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const filterCategory = document.getElementById("filter-category");
     const filterSorting = document.getElementById("filter-sorting");
 
-    // Adicione uma estrutura de dados para rastrear as despesas por categoria
     const expenseCategoryData = {};
 
     let expenses = [];
@@ -43,15 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    // Adicione uma variável para o gráfico de pizza
     const pieChart = new Chart(document.getElementById("pie-chart").getContext("2d"), {
         type: "pie",
         data: {
-            labels: [], // Adicione rótulos das categorias aqui
+            labels: [],
             datasets: [
                 {
-                    data: [], // Adicione dados das categorias aqui
-                    backgroundColor: [], // Adicione cores das categorias aqui
+                    data: [],
+                    backgroundColor: [],
                 },
             ],
         },
@@ -77,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 category: expenseCategory,
             };
 
-            // Atualize a estrutura de dados da categoria de despesas
             if (expenseCategory in expenseCategoryData) {
                 expenseCategoryData[expenseCategory] += expenseAmount;
             } else {
@@ -88,14 +85,13 @@ document.addEventListener("DOMContentLoaded", function () {
             expenseLabels.push(expense.name);
             expenseData.push(expense.amount);
             updateExpenses();
-            updatePieChart(); // Atualize o gráfico de pizza
+            updatePieChart();
             clearInputs();
             money -= expenseAmount;
             totalMoney.innerText = `Saldo: R$ ${money.toFixed(2)}`;
         }
     });
 
-    // Adicione uma função para atualizar o gráfico de pizza
     function updatePieChart() {
         const categoryLabels = Object.keys(expenseCategoryData);
         const categoryData = Object.values(expenseCategoryData);
@@ -107,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
         pieChart.update();
     }
 
-    // Adicione uma função para gerar cores aleatórias para as categorias
     function generateRandomColors(count) {
         const colors = [];
         for (let i = 0; i < count; i++) {
@@ -125,18 +120,20 @@ document.addEventListener("DOMContentLoaded", function () {
         return color;
     }
 
+    filterCategory.addEventListener("change", updateExpenses);
+    filterSorting.addEventListener("change", updateExpenses);
+
     function updateExpenses() {
         expenseList.innerHTML = "";
         total = 0;
 
-        // Aplicar filtros
         const selectedCategory = filterCategory.value;
         const sortingOption = filterSorting.value;
 
-        let filteredExpenses = expenses;
+        let filteredExpenses = expenses.slice();
 
         if (selectedCategory !== "Todas") {
-            filteredExpenses = expenses.filter(expense => expense.category === selectedCategory);
+            filteredExpenses = filteredExpenses.filter(expense => expense.category === selectedCategory);
         }
 
         if (sortingOption === "Valor Crescente") {
@@ -169,7 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.deleteExpense = function (index) {
         if (index >= 0 && index < expenses.length) {
-            // Atualize a estrutura de dados da categoria de despesas ao excluir uma despesa
             const deletedExpense = expenses[index];
             if (deletedExpense.category in expenseCategoryData) {
                 expenseCategoryData[deletedExpense.category] -= deletedExpense.amount;
@@ -178,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
             expenseLabels.splice(index, 1);
             expenseData.splice(index, 1);
             updateExpenses();
-            updatePieChart(); // Atualize o gráfico de pizza
+            updatePieChart();
             totalMoney.innerText = `Saldo: R$ ${money.toFixed(2)}`;
         }
     };
